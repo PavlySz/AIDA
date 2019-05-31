@@ -2,7 +2,7 @@ import pyttsx3
 
 import speech_recognition as sr
 
-from assistant import *
+import assistant
 
 class JARVIS():
     engine = pyttsx3.init()
@@ -40,19 +40,13 @@ class JARVIS():
 
 if __name__ == '__main__':
     Jojo = JARVIS()
-    ass = Assistant()
+    ass = assistant.Assistant()
 
     Jojo.talk_to_me("Hello. What is it that you desire?")
 
-    #loop to continue executing multiple commands
     while True:
-        ass.assistant(Jojo.my_command())
-
-
-# TODO:
-# Add translator
-# Open programs
-# Draw the signal
-# Handle exceptions from SpeechRecognition.ipynb
-
-# TEST THE FUCKING PROGRAM
+        try:
+            ass.assistant(Jojo.my_command())
+        except KeyboardInterrupt:
+            Jojo.talk_to_me('Goodbye')
+            sys.exit(0)

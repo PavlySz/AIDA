@@ -7,6 +7,12 @@ from JARVIS import JARVIS
 from open_file_program import OpenFileProgram
 from translator import MyTranslator
 
+# to import a class from a file in another package
+import sys
+from os import path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+from Audio_Visualization.audio_vis_pyqtgraph import AudioStream
+
 class Assistant():
     def __init__(self):
         self.Jojo = JARVIS()
@@ -14,8 +20,6 @@ class Assistant():
         self.trans = MyTranslator()
 
     def assistant(self, command):
-        "if statements for executing commands"
-
         if 'open reddit' in command:
             reg_ex = re.search('open reddit (.*)', command)
             url = 'https://www.reddit.com/'
@@ -56,6 +60,7 @@ class Assistant():
 
                 try:
                     self.OFP.close_program(program)
+                    self.Jojo.talk_to_me("I closed {program}.".format(program=program))
                 except Exception as e:
                     print(str(e))
                     self.Jojo.talk_to_me("Program {program} cannot be closed.".format(program=program))
@@ -71,7 +76,6 @@ class Assistant():
                 self.Jojo.talk_to_me("I'm sorry, I haven't learnt to speak Arabic yet. So I wrote it instead.")
                 self.OFP.open_file("Translations.txt")
 
-
         elif 'what\'s up' in command:
             self.Jojo.talk_to_me('Contemplating the purpose of life.')
 
@@ -86,6 +90,21 @@ class Assistant():
 
             else:
                 self.Jojo.talk_to_me('Oops! I ran out of jokes')
+
+        elif ('visualize' in command) or ('input signal' in command):
+                audio_app = AudioStream()
+
+                self.Jojo.talk_to_me('This is the graph of the input signal in the time and frequency domains')
+
+                audio_app.animation()
+
+                reg_ex = re.search('(.+)', command)
+
+                if reg_ex:
+                    word = reg_ex.group(1)
+                    if 'close' in word:
+                        self.Jojo.talk_to_me('You said close graph')
+                        audio_app.close_graph()
         
         elif 'goodbye' in command:
             self.Jojo.talk_to_me('See ya later, babe.')
