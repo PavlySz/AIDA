@@ -1,0 +1,2 @@
+dog --ar--> الكلب
+cat into arabic --ar--> القط إلى العربية

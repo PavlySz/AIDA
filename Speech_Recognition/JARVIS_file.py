@@ -1,18 +1,27 @@
+### Imports for JARVIS ###
+import pyttsx3
+import speech_recognition as sr
+
+### Imports for Assistant ###
 import re
 import webbrowser
 import requests
-import sys
 
-from JARVIS import JARVIS
-from open_file_program import OpenFileProgram
-from translator import MyTranslator
+# In case you run JARVIS_file directly
+# from open_file_program import OpenFileProgram
+# from translator import MyTranslator
 
-# to import a class from a file in another package
+# In case you run Main_GUI_Tk
+from Speech_Recognition.open_file_program import OpenFileProgram
+from Speech_Recognition.translator import MyTranslator
+
 import sys
 from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from Audio_Visualization.audio_vis_pyqtgraph import AudioStream
 
+
+# Listen, I know this is a bad practice, but circular imports fucked me up. Sorry, I can't be bothered anymore.
 class Assistant():
     def __init__(self):
         self.Jojo = JARVIS()
@@ -29,7 +38,7 @@ class Assistant():
             webbrowser.open(url)
             print('Done!')
 
-        elif 'open website' in command:
+        elif 'website' in command:
             reg_ex = re.search('open website (.+)', command)
 
             if reg_ex:
@@ -93,18 +102,9 @@ class Assistant():
 
         elif ('visualize' in command) or ('input signal' in command):
                 audio_app = AudioStream()
-
-                self.Jojo.talk_to_me('This is the graph of the input signal in the time and frequency domains')
-
                 audio_app.animation()
 
-                reg_ex = re.search('(.+)', command)
-
-                if reg_ex:
-                    word = reg_ex.group(1)
-                    if 'close' in word:
-                        self.Jojo.talk_to_me('You said close graph')
-                        audio_app.close_graph()
+                self.Jojo.talk_to_me('This is the graph of the input signal in the time and frequency domains')
         
         elif 'goodbye' in command:
             self.Jojo.talk_to_me('See ya later, babe.')
@@ -118,3 +118,54 @@ class Assistant():
 
         else:
             self.Jojo.talk_to_me('I\'m sorry, my programmer hasn\'t added this command yet because he is a lazy fuck!')
+
+
+
+class JARVIS():
+    engine = pyttsx3.init()
+
+    def __init__(self):
+        pass
+
+    def talk_to_me(self, audio):
+        '''speaks audio passed as argument'''
+        print(audio)
+
+        for line in audio.splitlines():
+            self.engine.say(line)
+            self.engine.runAndWait()
+
+
+    def my_command(self):
+        r = sr.Recognizer()
+
+        with sr.Microphone() as source:
+            print('Ready...')
+            r.pause_threshold = 0.5
+            r.adjust_for_ambient_noise(source, duration=0.5)
+            audio = r.listen(source)
+
+        try:
+            command = r.recognize_google(audio).lower()
+            print('You said: ' + command + '\n')
+
+        #loop back to continue to listen for commands if unrecognizable speech is received
+        except sr.UnknownValueError:
+            self.talk_to_me("Sorry, I couldn't hear that!")
+            print('Your last command couldn\'t be heard')
+            command = self.my_command()
+
+        return command
+
+
+    def JARVIS_main(self):
+        ass = Assistant()
+        self.talk_to_me("Hello. What is it that you desire?")
+
+        while True:
+            ass.assistant(self.my_command())
+
+if __name__ == '__main__':
+    Jojo = JARVIS()
+
+    Jojo.JARVIS_main()

@@ -49,6 +49,7 @@ class AudioStream(object):
         self.CHUNK = 1024 * 2
 
         self.p = pyaudio.PyAudio()
+
         self.stream = self.p.open(
             format=self.FORMAT,
             channels=self.CHANNELS,
@@ -96,6 +97,7 @@ class AudioStream(object):
         timer = QtCore.QTimer()
         timer.timeout.connect(self.update)
         timer.start(20)
+
         self.start()
 
     def close_graph(self):

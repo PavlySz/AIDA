@@ -30,11 +30,6 @@ Pre-requistes:
   
 Usage:
   - Visualizes the audio signal from a microphone in both time and frequency domains
-  
+
 TODO:
-  - GUI
-
-
-Credit (and not exclusive to):
-  - https://www.youtube.com/watch?v=RHmTgapLu4s
-  - https://www.youtube.com/watch?v=2eoudIBVW9w
+  - Real-time object detection 
