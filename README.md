@@ -37,4 +37,4 @@ TODO:
   - Real-time object detection 
 
 
-* Credit to Marvel's Agents of S.H.I.E.L.D. I'm not creative enough to have come up with that name myself. Watch it, by the way; it's really good.
+*Credit to Marvel's Agents of S.H.I.E.L.D. I'm not creative enough to have come up with that name myself. Watch it, by the way; it's really good.
