@@ -1,3 +1,4 @@
-dog --ar--> الكلب
+﻿dog --ar--> الكلب
 cat into arabic --ar--> القط إلى العربية
 conscience --ar--> ضمير
+digital signal processing --ar--> معالجة الإشاراة الرقمية
