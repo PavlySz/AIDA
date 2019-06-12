@@ -1,7 +1,9 @@
-# Speech Recognition and Audio Visualization
+# Artificially Intelligent Digital Assistant (AIDA)*
 DSP Project
 
-The program takes voice commands from the user, visualizes and executes them.
+# Features
+  - Supports vocal and keyboard commands
+  - Supports online and offline usage (although some of the commands may not work offline)
 
 # Speech Recognition
 Pre-requistes:
@@ -25,7 +27,7 @@ Available commands:
 # Audio Visualization
 Pre-requistes:
   - Python3
-  - Matplotlib
+  - PyQtGraph
   - PyAudio
   
 Usage:
@@ -33,3 +35,6 @@ Usage:
 
 TODO:
   - Real-time object detection 
+
+
+* Credit to Marvel's Agents of S.H.I.E.L.D. I'm not creative enough to have come up with that name myself. Watch it, by the way; it's really good.
